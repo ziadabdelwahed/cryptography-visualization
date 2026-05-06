@@ -54,31 +54,42 @@ const MATH_FACTS = [
 
 export default function HomePage() {
   return (
-    <div className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>
+    <div className="container" style={{ 
+      paddingTop: "clamp(40px, 8vw, 80px)", 
+      paddingBottom: "clamp(40px, 8vw, 80px)",
+      paddingLeft: "clamp(16px, 4vw, 24px)",
+      paddingRight: "clamp(16px, 4vw, 24px)",
+    }}>
       {/* ── Hero ───────────────────────────────────────────── */}
       <section
-        style={{ textAlign: "center", marginBottom: 80, position: "relative" }}
+        style={{ 
+          textAlign: "center", 
+          marginBottom: "clamp(40px, 8vw, 80px)", 
+          position: "relative" 
+        }}
       >
         {/* Decorative glows */}
         <div
           className="hero-glow"
           style={{
-            width: 500,
-            height: 300,
+            width: "min(500px, 90vw)",
+            height: "min(300px, 40vh)",
             background: "var(--accent)",
-            top: -60,
+            top: "-5%",
             left: "50%",
             transform: "translateX(-50%)",
+            maxWidth: "100%",
           }}
         />
         <div
           className="hero-glow"
           style={{
-            width: 300,
-            height: 200,
+            width: "min(300px, 60vw)",
+            height: "min(200px, 30vh)",
             background: "var(--accent2)",
-            top: 20,
-            left: "30%",
+            top: "5%",
+            left: "clamp(20%, 30%, 30%)",
+            display: "block",
           }}
         />
 
@@ -89,7 +100,7 @@ export default function HomePage() {
             alignItems: "center",
             gap: 8,
             fontFamily: "var(--heading)",
-            fontSize: 10,
+            fontSize: "clamp(8px, 1.5vw, 10px)",
             fontWeight: 700,
             letterSpacing: "0.3em",
             textTransform: "uppercase",
@@ -97,7 +108,9 @@ export default function HomePage() {
             border: "1px solid var(--border)",
             padding: "6px 16px",
             borderRadius: 2,
-            marginBottom: 28,
+            marginBottom: "clamp(20px, 4vw, 28px)",
+            flexWrap: "wrap",
+            justifyContent: "center",
           }}
         >
           <span
@@ -108,6 +121,7 @@ export default function HomePage() {
               background: "var(--accent)",
               boxShadow: "var(--glow)",
               display: "inline-block",
+              flexShrink: 0,
             }}
           />
           Pure Mathematics — No Libraries
@@ -115,10 +129,12 @@ export default function HomePage() {
 
         <h1
           style={{
-            fontSize: "clamp(36px, 6vw, 72px)",
+            fontSize: "clamp(28px, 8vw, 72px)",
             lineHeight: 1.1,
             letterSpacing: "0.04em",
-            marginBottom: 20,
+            marginBottom: "clamp(16px, 3vw, 20px)",
+            paddingLeft: "clamp(0px, 2vw, 16px)",
+            paddingRight: "clamp(0px, 2vw, 16px)",
           }}
         >
           Cryptography
@@ -128,18 +144,27 @@ export default function HomePage() {
 
         <p
           style={{
-            fontSize: 18,
+            fontSize: "clamp(15px, 2.5vw, 18px)",
             color: "var(--text-dim)",
-            maxWidth: 560,
-            margin: "0 auto 36px",
+            maxWidth: "min(560px, 90vw)",
+            margin: "0 auto clamp(24px, 4vw, 36px)",
             lineHeight: 1.7,
             fontFamily: "var(--body)",
+            paddingLeft: "clamp(0px, 2vw, 16px)",
+            paddingRight: "clamp(0px, 2vw, 16px)",
           }}
         >
           {PROJECT.description}
         </p>
 
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <div style={{ 
+          display: "flex", 
+          gap: "clamp(8px, 2vw, 12px)", 
+          justifyContent: "center", 
+          flexWrap: "wrap",
+          paddingLeft: "clamp(0px, 2vw, 16px)",
+          paddingRight: "clamp(0px, 2vw, 16px)",
+        }}>
           <Link href="/aes" className="btn btn-primary">
             Explore AES
           </Link>
@@ -153,7 +178,13 @@ export default function HomePage() {
       </section>
 
       {/* ── Feature cards ──────────────────────────────────── */}
-      <section className="grid-2" style={{ marginBottom: 64 }}>
+      <section 
+        className="grid-2" 
+        style={{ 
+          marginBottom: "clamp(32px, 6vw, 64px)",
+          gap: "clamp(16px, 3vw, 24px)",
+        }}
+      >
         {FEATURES.map((f) => (
           <div
             key={f.href}
@@ -163,21 +194,28 @@ export default function HomePage() {
               boxShadow: `0 0 0 1px ${f.color}18, inset 0 0 60px ${f.color}04`,
               display: "flex",
               flexDirection: "column",
-              gap: 20,
+              gap: "clamp(16px, 2vw, 20px)",
+              padding: "clamp(20px, 4vw, 24px)",
             }}
           >
             {/* Tag */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              gap: "clamp(8px, 2vw, 12px)",
+              flexWrap: "wrap",
+            }}>
               <div
                 style={{
                   fontFamily: "var(--heading)",
-                  fontSize: 10,
+                  fontSize: "clamp(8px, 1.3vw, 10px)",
                   fontWeight: 700,
                   letterSpacing: "0.25em",
                   color: f.color,
                   border: `1px solid ${f.color}`,
                   padding: "4px 10px",
                   borderRadius: 2,
+                  whiteSpace: "nowrap",
                 }}
               >
                 {f.tag}
@@ -185,7 +223,7 @@ export default function HomePage() {
               <div
                 style={{
                   fontFamily: "var(--body)",
-                  fontSize: 12,
+                  fontSize: "clamp(11px, 1.8vw, 12px)",
                   color: "var(--text-dim)",
                   letterSpacing: "0.05em",
                 }}
@@ -197,39 +235,60 @@ export default function HomePage() {
             <div>
               <h2
                 style={{
-                  fontSize: 28,
-                  marginBottom: 12,
+                  fontSize: "clamp(22px, 3.5vw, 28px)",
+                  marginBottom: "clamp(8px, 2vw, 12px)",
                   color: "var(--text-bright)",
                 }}
               >
                 {f.title}
               </h2>
-              <p style={{ color: "var(--text-dim)", lineHeight: 1.7, fontSize: 14 }}>
+              <p style={{ 
+                color: "var(--text-dim)", 
+                lineHeight: 1.7, 
+                fontSize: "clamp(13px, 2vw, 14px)" 
+              }}>
                 {f.body}
               </p>
             </div>
 
             {/* Bullet list */}
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            <ul style={{ 
+              listStyle: "none", 
+              display: "flex", 
+              flexDirection: "column", 
+              gap: "clamp(6px, 1.5vw, 8px)" 
+            }}>
               {f.bullets.map((b) => (
                 <li
                   key={b}
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 10,
-                    fontSize: 13,
+                    gap: "clamp(6px, 1.5vw, 10px)",
+                    fontSize: "clamp(11px, 1.8vw, 13px)",
                     color: "var(--text)",
                     fontFamily: "var(--mono)",
                   }}
                 >
-                  <span style={{ color: f.color, fontSize: 16 }}>›</span>
+                  <span style={{ 
+                    color: f.color, 
+                    fontSize: "clamp(14px, 2vw, 16px)",
+                    flexShrink: 0,
+                  }}>›</span>
                   {b}
                 </li>
               ))}
             </ul>
 
-            <Link href={f.href} className={f.ctaClass} style={{ alignSelf: "flex-start" }}>
+            <Link 
+              href={f.href} 
+              className={f.ctaClass} 
+              style={{ 
+                alignSelf: "flex-start",
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+                padding: "clamp(10px, 2vw, 12px) clamp(20px, 3vw, 28px)",
+              }}
+            >
               {f.cta}
             </Link>
           </div>
@@ -237,9 +296,20 @@ export default function HomePage() {
       </section>
 
       {/* ── Math facts ticker ──────────────────────────────── */}
-      <section className="card" style={{ marginBottom: 64 }}>
-        <div className="card-header">Math Facts</div>
-        <div className="grid-3" style={{ gap: 12 }}>
+      <section 
+        className="card" 
+        style={{ 
+          marginBottom: "clamp(32px, 6vw, 64px)",
+          padding: "clamp(20px, 4vw, 24px)",
+        }}
+      >
+        <div className="card-header" style={{
+          fontSize: "clamp(10px, 1.5vw, 11px)",
+          marginBottom: "clamp(16px, 3vw, 20px)",
+        }}>
+          Math Facts
+        </div>
+        <div className="grid-3" style={{ gap: "clamp(8px, 2vw, 12px)" }}>
           {MATH_FACTS.map((fact) => (
             <div
               key={fact.label}
@@ -247,17 +317,18 @@ export default function HomePage() {
                 background: "var(--surface2)",
                 border: "1px solid var(--border)",
                 borderRadius: "var(--radius)",
-                padding: "14px 16px",
+                padding: "clamp(12px, 2vw, 14px) clamp(12px, 2vw, 16px)",
+                minWidth: 0,
               }}
             >
               <div
                 style={{
                   fontFamily: "var(--heading)",
-                  fontSize: 9,
+                  fontSize: "clamp(7px, 1.2vw, 9px)",
                   letterSpacing: "0.2em",
                   color: "var(--text-dim)",
                   textTransform: "uppercase",
-                  marginBottom: 6,
+                  marginBottom: "clamp(4px, 1vw, 6px)",
                 }}
               >
                 {fact.label}
@@ -265,9 +336,10 @@ export default function HomePage() {
               <div
                 style={{
                   fontFamily: "var(--mono)",
-                  fontSize: 14,
+                  fontSize: "clamp(12px, 2vw, 14px)",
                   color: "var(--accent)",
                   fontWeight: 600,
+                  wordBreak: "break-word",
                 }}
               >
                 {fact.value}
@@ -282,11 +354,13 @@ export default function HomePage() {
         style={{
           textAlign: "center",
           borderTop: "1px solid var(--border)",
-          paddingTop: 32,
+          paddingTop: "clamp(24px, 4vw, 32px)",
+          paddingBottom: "clamp(16px, 3vw, 24px)",
           color: "var(--text-dim)",
-          fontSize: 12,
+          fontSize: "clamp(10px, 1.5vw, 12px)",
           fontFamily: "var(--mono)",
           letterSpacing: "0.05em",
+          wordBreak: "break-word",
         }}
       >
         Built by{" "}

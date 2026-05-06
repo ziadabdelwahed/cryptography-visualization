@@ -42,7 +42,7 @@ export const AES_KEY_SIZE_LABELS: Record<128 | 192 | 256, string> = {
 
 // ── RSA ──────────────────────────────────────────────────────
 export const RSA_CONFIG = {
-  defaultPrimeBits: 16,
+  defaultPrimeBits: 128,
   // primeBitOptions: [8, 12, 16, 20, 32, 64, 128, 256, 512, 1024, 2048, 3072, 4096, 8192] as const,
   primeBitOptions: [8, 12, 16, 20, 32, 64, 128, 256, 512, 1024, 2048] as const,
 } as const;
@@ -50,11 +50,11 @@ export const RSA_CONFIG = {
 export const RSA_PRIME_LABELS: Record<number, string> = {
   8:    "8-bit primes (toy — instant)",
   12:   "12-bit primes (small)",
-  16:   "16-bit primes (default)",
-  20:   "20-bit primes (larger)",
-  32:   "32-bit primes (tiny — educational)",
-  64:   "64-bit primes (very small)",
-  128:  "128-bit primes (small)",
+  16:   "16-bit primes (small)",
+  20:   "20-bit primes (small)",
+  32:   "32-bit primes (small)",
+  64:   "64-bit primes (small)",
+  128:  "128-bit primes (default - small)",
   256:  "256-bit primes (medium)",
   512:  "512-bit primes (large — weak)",
   1024: "1024-bit primes (legacy — deprecated)",
@@ -99,9 +99,9 @@ export const ABOUT_SECTIONS = [
 ] as const;
 
 export const TECH_STACK = [
-  { label: "Framework",   value: "Next.js 14  (App Router)" },
+  { label: "Framework",   value: "Next.js" },
   { label: "Language",    value: "TypeScript" },
-  { label: "Styling",     value: "CSS (custom, no Tailwind)" },
+  { label: "Styling",     value: "CSS (custom, no Tailwind" },
   { label: "Crypto",      value: "Pure math — zero libraries" },
   { label: "BigInt",      value: "Native JS BigInt for RSA" },
   { label: "Fonts",       value: "Orbitron · Rajdhani · Share Tech Mono" },

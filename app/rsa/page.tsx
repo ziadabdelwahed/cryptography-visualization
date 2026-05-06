@@ -150,32 +150,57 @@ export default function RSAPage() {
   const activeK = keys;
 
   return (
-    <div className="container" style={{ paddingTop: 48, paddingBottom: 80 }}>
+    <div className="container" style={{ 
+      paddingTop: "clamp(24px, 5vw, 48px)", 
+      paddingBottom: "clamp(40px, 8vw, 80px)",
+      paddingLeft: "clamp(16px, 4vw, 24px)",
+      paddingRight: "clamp(16px, 4vw, 24px)",
+    }}>
       {/* ── Page header ──────────────────────────────────── */}
-      <div style={{ marginBottom: 40 }}>
+      <div style={{ marginBottom: "clamp(24px, 5vw, 40px)" }}>
         <div style={{
-          fontFamily: "var(--heading)", fontSize: 10, letterSpacing: "0.3em",
-          color: "var(--accent2)", textTransform: "uppercase", marginBottom: 12,
+          fontFamily: "var(--heading)", 
+          fontSize: "clamp(8px, 1.5vw, 10px)", 
+          letterSpacing: "0.3em",
+          color: "var(--accent2)", 
+          textTransform: "uppercase", 
+          marginBottom: "clamp(8px, 2vw, 12px)",
         }}>
           ◈ Algorithm / RSA
         </div>
-        <h1 style={{ fontSize: "clamp(28px, 4vw, 48px)", marginBottom: 8 }}>
+        <h1 style={{ 
+          fontSize: "clamp(24px, 5vw, 48px)", 
+          marginBottom: "clamp(4px, 1vw, 8px)" 
+        }}>
           RSA Encryption
         </h1>
-        <p style={{ color: "var(--text-dim)", fontSize: 15, maxWidth: 560 }}>
+        <p style={{ 
+          color: "var(--text-dim)", 
+          fontSize: "clamp(13px, 2vw, 15px)", 
+          maxWidth: "min(560px, 100%)" 
+        }}>
           Rivest–Shamir–Adleman — asymmetric cipher built on integer factorization.
           Pure math: Miller-Rabin primes, Extended Euclidean Algorithm, square-and-multiply modular exponentiation.
         </p>
       </div>
 
       {/* ── Tab bar ──────────────────────────────────────── */}
-      <div className="tab-bar" style={{ marginBottom: 32 }}>
+      <div className="tab-bar" style={{ 
+        marginBottom: "clamp(20px, 4vw, 32px)",
+        overflowX: "auto",
+        flexWrap: "wrap",
+      }}>
         {(["keygen", "encrypt", "decrypt"] as Tab[]).map((t) => (
           <button
             key={t}
             className={`tab-btn${tab === t ? " active" : ""}`}
             onClick={() => { setTab(t); setError(""); }}
-            style={{ color: t === "keygen" ? undefined : t === "encrypt" ? undefined : undefined }}
+            style={{
+              fontSize: "clamp(9px, 1.3vw, 10px)",
+              padding: "clamp(8px, 1.5vw, 12px) clamp(16px, 2vw, 24px)",
+              whiteSpace: "nowrap",
+              color: t === "keygen" ? undefined : t === "encrypt" ? undefined : undefined,
+            }}
           >
             {t === "keygen" ? "⚙ Key Generation" : t === "encrypt" ? "🔒 Encrypt" : "🔓 Decrypt"}
           </button>
@@ -184,9 +209,15 @@ export default function RSAPage() {
 
       {error && (
         <div style={{
-          fontFamily: "var(--mono)", fontSize: 12, color: "var(--accent2)",
-          background: "rgba(255,107,53,0.07)", border: "1px solid rgba(255,107,53,0.2)",
-          borderRadius: "var(--radius)", padding: "10px 14px", marginBottom: 24,
+          fontFamily: "var(--mono)", 
+          fontSize: "clamp(11px, 1.5vw, 12px)", 
+          color: "var(--accent2)",
+          background: "rgba(255,107,53,0.07)", 
+          border: "1px solid rgba(255,107,53,0.2)",
+          borderRadius: "var(--radius)", 
+          padding: "clamp(8px, 1.5vw, 10px) clamp(10px, 2vw, 14px)", 
+          marginBottom: "clamp(16px, 3vw, 24px)",
+          wordBreak: "break-word",
         }}>
           ⚠ {error}
         </div>
@@ -194,18 +225,34 @@ export default function RSAPage() {
 
       {/* ═══════════════════ KEY GENERATION ════════════════════ */}
       {tab === "keygen" && (
-        <div className="grid-2" style={{ alignItems: "start" }}>
+        <div className="grid-2" style={{ 
+          alignItems: "start",
+          gap: "clamp(16px, 3vw, 24px)",
+        }}>
           {/* Left: config */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <div className="card">
-              <div className="card-header">Prime Generation Config</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(16px, 2vw, 20px)" }}>
+            <div className="card" style={{
+              padding: "clamp(16px, 3vw, 24px)",
+            }}>
+              <div className="card-header" style={{
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+                marginBottom: "clamp(16px, 3vw, 20px)",
+              }}>
+                Prime Generation Config
+              </div>
 
-              <div className="input-group" style={{ marginBottom: 20 }}>
-                <label className="input-label">Prime Bit Size</label>
+              <div className="input-group" style={{ marginBottom: "clamp(16px, 3vw, 20px)" }}>
+                <label className="input-label" style={{
+                  fontSize: "clamp(9px, 1.3vw, 10px)",
+                }}>Prime Bit Size</label>
                 <select
                   className="select-field"
                   value={primeBits}
                   onChange={(e) => setPrimeBits(Number(e.target.value))}
+                  style={{
+                    fontSize: "clamp(12px, 1.8vw, 14px)",
+                    padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                  }}
                 >
                   {RSA_CONFIG.primeBitOptions.map((b) => (
                     <option key={b} value={b}>{RSA_PRIME_LABELS[b]}</option>
@@ -217,7 +264,11 @@ export default function RSAPage() {
                 className="btn btn-secondary w-full"
                 onClick={generateKeys}
                 disabled={genLoading}
-                style={{ justifyContent: "center" }}
+                style={{ 
+                  justifyContent: "center",
+                  padding: "clamp(10px, 2vw, 12px) clamp(20px, 3vw, 28px)",
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                }}
               >
                 {genLoading ? "Generating primes…" : "⚙ Generate RSA Keys"}
               </button>
@@ -225,8 +276,18 @@ export default function RSAPage() {
 
             {/* Key summary */}
             {activeK && (
-              <div className="card" style={{ borderColor: "var(--accent2)", boxShadow: "0 0 0 1px rgba(255,107,53,0.1)" }}>
-                <div className="card-header" style={{ color: "var(--accent2)" }}>Generated Keys</div>
+              <div className="card" style={{ 
+                borderColor: "var(--accent2)", 
+                boxShadow: "0 0 0 1px rgba(255,107,53,0.1)",
+                padding: "clamp(16px, 3vw, 24px)",
+              }}>
+                <div className="card-header" style={{ 
+                  color: "var(--accent2)",
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                  marginBottom: "clamp(16px, 3vw, 20px)",
+                }}>
+                  Generated Keys
+                </div>
                 {[
                   { label: "p (prime)", val: activeK.p.toString(), accent: true },
                   { label: "q (prime)", val: activeK.q.toString(), accent: true },
@@ -235,9 +296,16 @@ export default function RSAPage() {
                   { label: "e (public exp)", val: activeK.e.toString() },
                   { label: "d (private exp)", val: activeK.d.toString() },
                 ].map(({ label, val, accent }) => (
-                  <div key={label} style={{ marginBottom: 12 }}>
-                    <div className="input-label" style={{ marginBottom: 4 }}>{label}</div>
-                    <div className="rsa-value" style={accent ? { borderColor: "rgba(0,255,231,0.2)", color: "var(--accent)" } : undefined}>
+                  <div key={label} style={{ marginBottom: "clamp(8px, 1.5vw, 12px)" }}>
+                    <div className="input-label" style={{ 
+                      marginBottom: "clamp(2px, 0.5vw, 4px)",
+                      fontSize: "clamp(9px, 1.3vw, 10px)",
+                    }}>{label}</div>
+                    <div className="rsa-value" style={{ 
+                      fontSize: "clamp(11px, 1.8vw, 13px)",
+                      wordBreak: "break-all",
+                      ...(accent ? { borderColor: "rgba(0,255,231,0.2)", color: "var(--accent)" } : {}),
+                    }}>
                       {val}
                     </div>
                   </div>
@@ -247,36 +315,55 @@ export default function RSAPage() {
           </div>
 
           {/* Right: step visualizer */}
-          <div>
+          <div style={{ overflowX: "auto" }}>
             {keyGenSteps.length > 0 ? (
-              <div className="card animate-fade-up">
-                <div className="card-header">Key Generation Steps</div>
+              <div className="card animate-fade-up" style={{
+                padding: "clamp(16px, 3vw, 24px)",
+              }}>
+                <div className="card-header" style={{
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                  marginBottom: "clamp(16px, 3vw, 20px)",
+                }}>
+                  Key Generation Steps
+                </div>
                 <RSAVisualizer steps={keyGenSteps} />
 
                 {/* EEA Table */}
                 {eeaRows.length > 0 && (
-                  <div style={{ marginTop: 24 }}>
+                  <div style={{ marginTop: "clamp(16px, 3vw, 24px)" }}>
                     <button
                       className="btn btn-ghost btn-sm"
                       onClick={() => setShowEEA(!showEEA)}
-                      style={{ marginBottom: 12 }}
+                      style={{ 
+                        marginBottom: "clamp(8px, 1.5vw, 12px)",
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                        padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                      }}
                     >
                       {showEEA ? "▲ Hide" : "▼ Show"} Extended Euclidean Algorithm Table
                     </button>
                     {showEEA && (
                       <div className="overflow-x animate-fade-up">
                         <table style={{
-                          width: "100%", borderCollapse: "collapse",
-                          fontFamily: "var(--mono)", fontSize: 11,
+                          width: "100%", 
+                          borderCollapse: "collapse",
+                          fontFamily: "var(--mono)", 
+                          fontSize: "clamp(10px, 1.5vw, 11px)",
+                          minWidth: "600px",
                         }}>
                           <thead>
                             <tr>
                               {["a", "b", "q = a÷b", "r = a mod b", "s", "t"].map(h => (
                                 <th key={h} style={{
-                                  textAlign: "left", padding: "8px 10px",
-                                  color: "var(--accent)", borderBottom: "1px solid var(--border)",
-                                  fontFamily: "var(--heading)", fontSize: 9, letterSpacing: "0.15em",
+                                  textAlign: "left", 
+                                  padding: "clamp(6px, 1vw, 8px) clamp(8px, 1.5vw, 10px)",
+                                  color: "var(--accent)", 
+                                  borderBottom: "1px solid var(--border)",
+                                  fontFamily: "var(--heading)", 
+                                  fontSize: "clamp(8px, 1.2vw, 9px)", 
+                                  letterSpacing: "0.15em",
                                   textTransform: "uppercase",
+                                  whiteSpace: "nowrap",
                                 }}>{h}</th>
                               ))}
                             </tr>
@@ -286,8 +373,12 @@ export default function RSAPage() {
                               <tr key={i} style={{ borderBottom: "1px solid var(--border)" }}>
                                 {[row.a, row.b, row.q, row.r, row.s, row.t].map((v, j) => (
                                   <td key={j} style={{
-                                    padding: "7px 10px", color: "var(--text)", fontSize: 11,
-                                    maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis",
+                                    padding: "clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 10px)", 
+                                    color: "var(--text)", 
+                                    fontSize: "clamp(10px, 1.5vw, 11px)",
+                                    maxWidth: 120, 
+                                    overflow: "hidden", 
+                                    textOverflow: "ellipsis",
                                     whiteSpace: "nowrap",
                                   }}>{v}</td>
                                 ))}
@@ -301,14 +392,25 @@ export default function RSAPage() {
                 )}
               </div>
             ) : (
-              <div className="card" style={{ textAlign: "center", padding: 48 }}>
+              <div className="card" style={{ 
+                textAlign: "center", 
+                padding: "clamp(32px, 6vw, 48px)" 
+              }}>
                 <div style={{
-                  fontFamily: "var(--heading)", fontSize: 11, letterSpacing: "0.2em",
-                  color: "var(--text-dim)", marginBottom: 12,
+                  fontFamily: "var(--heading)", 
+                  fontSize: "clamp(10px, 1.5vw, 11px)", 
+                  letterSpacing: "0.2em",
+                  color: "var(--text-dim)", 
+                  marginBottom: "clamp(8px, 2vw, 12px)",
                 }}>
                   NO KEYS GENERATED
                 </div>
-                <p style={{ color: "var(--text-dim)", fontSize: 13 }}>
+                <p style={{ 
+                  color: "var(--text-dim)", 
+                  fontSize: "clamp(12px, 1.8vw, 13px)",
+                  maxWidth: "min(400px, 100%)",
+                  margin: "0 auto",
+                }}>
                   Select a prime bit size and click "Generate RSA Keys" to see the full key generation walkthrough.
                 </p>
               </div>
@@ -319,87 +421,154 @@ export default function RSAPage() {
 
       {/* ═══════════════════ ENCRYPT ════════════════════════ */}
       {tab === "encrypt" && (
-        <div className="grid-2" style={{ alignItems: "start" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <div className="card">
-              <div className="card-header">Encrypt Configuration</div>
+        <div className="grid-2" style={{ 
+          alignItems: "start",
+          gap: "clamp(16px, 3vw, 24px)",
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(16px, 2vw, 20px)" }}>
+            <div className="card" style={{
+              padding: "clamp(16px, 3vw, 24px)",
+            }}>
+              <div className="card-header" style={{
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+                marginBottom: "clamp(16px, 3vw, 20px)",
+              }}>
+                Encrypt Configuration
+              </div>
 
               {/* Custom key toggle */}
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+              <div style={{ marginBottom: "clamp(16px, 3vw, 20px)" }}>
+                <div style={{ 
+                  display: "flex", 
+                  gap: "clamp(6px, 1.5vw, 8px)", 
+                  marginBottom: "clamp(8px, 1.5vw, 12px)",
+                  flexWrap: "wrap",
+                }}>
                   <button
                     className={`btn btn-sm${!useCustomKeys ? " btn-primary" : " btn-ghost"}`}
                     onClick={() => setUseCustomKeys(false)}
+                    style={{
+                      fontSize: "clamp(9px, 1.3vw, 10px)",
+                      padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                      whiteSpace: "nowrap",
+                    }}
                   >Use Generated Keys</button>
                   <button
                     className={`btn btn-sm${useCustomKeys ? " btn-secondary" : " btn-ghost"}`}
                     onClick={() => setUseCustomKeys(true)}
+                    style={{
+                      fontSize: "clamp(9px, 1.3vw, 10px)",
+                      padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                      whiteSpace: "nowrap",
+                    }}
                   >Enter Custom Keys</button>
                 </div>
 
                 {!useCustomKeys && !keys && (
-                  <div style={{ fontSize: 12, color: "var(--accent2)", fontFamily: "var(--mono)" }}>
+                  <div style={{ 
+                    fontSize: "clamp(11px, 1.5vw, 12px)", 
+                    color: "var(--accent2)", 
+                    fontFamily: "var(--mono)" 
+                  }}>
                     ⚠ No keys generated. Go to Key Generation tab first.
                   </div>
                 )}
 
                 {!useCustomKeys && keys && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1vw, 8px)" }}>
                     {[
                       { label: "Public Key e", val: keys.e.toString() },
                       { label: "Modulus n", val: keys.n.toString() },
                     ].map(({ label, val }) => (
                       <div key={label}>
-                        <div className="input-label" style={{ marginBottom: 4 }}>{label}</div>
-                        <div className="rsa-value" style={{ maxHeight: 40 }}>{val}</div>
+                        <div className="input-label" style={{ 
+                          marginBottom: "clamp(2px, 0.5vw, 4px)",
+                          fontSize: "clamp(9px, 1.3vw, 10px)",
+                        }}>{label}</div>
+                        <div className="rsa-value" style={{ 
+                          maxHeight: 40,
+                          fontSize: "clamp(11px, 1.8vw, 13px)",
+                          wordBreak: "break-all",
+                        }}>{val}</div>
                       </div>
                     ))}
                   </div>
                 )}
 
                 {useCustomKeys && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "clamp(8px, 1.5vw, 12px)" }}>
                     <div className="input-group">
-                      <label className="input-label">Public Exponent e</label>
+                      <label className="input-label" style={{
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                      }}>Public Exponent e</label>
                       <input className="input-field" value={customE}
-                        onChange={(e) => setCustomE(e.target.value)} placeholder="e.g. 65537" />
+                        onChange={(e) => setCustomE(e.target.value)} 
+                        placeholder="e.g. 65537"
+                        style={{
+                          fontSize: "clamp(12px, 1.8vw, 14px)",
+                          padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                        }} />
                     </div>
                     <div className="input-group">
-                      <label className="input-label">Modulus n</label>
+                      <label className="input-label" style={{
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                      }}>Modulus n</label>
                       <input className="input-field" value={customN}
-                        onChange={(e) => setCustomN(e.target.value)} placeholder="n = p × q" />
+                        onChange={(e) => setCustomN(e.target.value)} 
+                        placeholder="n = p × q"
+                        style={{
+                          fontSize: "clamp(12px, 1.8vw, 14px)",
+                          padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                        }} />
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Input */}
-              <div className="input-group" style={{ marginBottom: 12 }}>
-                <label className="input-label">Input Format</label>
-                <div style={{ display: "flex", gap: 8 }}>
+              <div className="input-group" style={{ marginBottom: "clamp(8px, 1.5vw, 12px)" }}>
+                <label className="input-label" style={{
+                  fontSize: "clamp(9px, 1.3vw, 10px)",
+                }}>Input Format</label>
+                <div style={{ display: "flex", gap: "clamp(6px, 1.5vw, 8px)", flexWrap: "wrap" }}>
                   {(["text", "number"] as InputMode[]).map((m) => (
                     <button key={m}
                       className={`btn btn-sm${encInputMode === m ? " btn-primary" : " btn-ghost"}`}
                       onClick={() => setEncInputMode(m)}
+                      style={{
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                        padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                        whiteSpace: "nowrap",
+                      }}
                     >{m === "text" ? "Text" : "Number"}</button>
                   ))}
                 </div>
               </div>
 
-              <div className="input-group" style={{ marginBottom: 20 }}>
-                <label className="input-label">
+              <div className="input-group" style={{ marginBottom: "clamp(16px, 3vw, 20px)" }}>
+                <label className="input-label" style={{
+                  fontSize: "clamp(9px, 1.3vw, 10px)",
+                }}>
                   {encInputMode === "text" ? "Plaintext (converted to BigInt)" : "Message as integer (m < n)"}
                 </label>
                 <input className="input-field" value={encInput}
                   onChange={(e) => setEncInput(e.target.value)}
                   placeholder={encInputMode === "text" ? "Hello" : "42"}
-                  spellCheck={false} />
+                  spellCheck={false}
+                  style={{
+                    fontSize: "clamp(12px, 1.8vw, 14px)",
+                    padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                  }} />
               </div>
 
               <button
                 className="btn btn-primary w-full"
                 onClick={runEncrypt}
-                style={{ justifyContent: "center" }}
+                style={{ 
+                  justifyContent: "center",
+                  padding: "clamp(10px, 2vw, 12px) clamp(20px, 3vw, 28px)",
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                }}
               >
                 🔒 Encrypt
               </button>
@@ -407,16 +576,42 @@ export default function RSAPage() {
 
             {/* Output */}
             {encResult && (
-              <div className="card animate-fade-up" style={{ borderColor: "var(--accent2)" }}>
-                <div className="card-header" style={{ color: "var(--accent2)" }}>Ciphertext</div>
-                <div className="input-label" style={{ marginBottom: 6 }}>m = {encResult.input.toString()}</div>
-                <div style={{ fontSize: 12, color: "var(--text-dim)", fontFamily: "var(--mono)", marginBottom: 8 }}>
+              <div className="card animate-fade-up" style={{ 
+                borderColor: "var(--accent2)",
+                padding: "clamp(16px, 3vw, 24px)",
+              }}>
+                <div className="card-header" style={{ 
+                  color: "var(--accent2)",
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                  marginBottom: "clamp(12px, 2vw, 16px)",
+                }}>Ciphertext</div>
+                <div className="input-label" style={{ 
+                  marginBottom: "clamp(4px, 1vw, 6px)",
+                  fontSize: "clamp(9px, 1.3vw, 10px)",
+                }}>m = {encResult.input.toString()}</div>
+                <div style={{ 
+                  fontSize: "clamp(11px, 1.5vw, 12px)", 
+                  color: "var(--text-dim)", 
+                  fontFamily: "var(--mono)", 
+                  marginBottom: "clamp(6px, 1.5vw, 8px)" 
+                }}>
                   c = m^e mod n
                 </div>
-                <div className="rsa-value" style={{ borderColor: "rgba(255,107,53,0.3)", color: "var(--accent2)", maxHeight: "none" }}>
+                <div className="rsa-value" style={{ 
+                  borderColor: "rgba(255,107,53,0.3)", 
+                  color: "var(--accent2)", 
+                  maxHeight: "none",
+                  fontSize: "clamp(11px, 1.8vw, 13px)",
+                  wordBreak: "break-all",
+                }}>
                   {encResult.output.toString()}
                 </div>
-                <div style={{ marginTop: 12, fontSize: 12, color: "var(--text-dim)", fontFamily: "var(--mono)" }}>
+                <div style={{ 
+                  marginTop: "clamp(8px, 1.5vw, 12px)", 
+                  fontSize: "clamp(11px, 1.5vw, 12px)", 
+                  color: "var(--text-dim)", 
+                  fontFamily: "var(--mono)" 
+                }}>
                   Square-and-multiply: {encResult.modPowRows.length} steps
                 </div>
               </div>
@@ -424,28 +619,60 @@ export default function RSAPage() {
           </div>
 
           {/* Right: steps + mod pow table */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            gap: "clamp(16px, 2vw, 20px)",
+            overflowX: "auto",
+          }}>
             {encResult ? (
               <>
-                <div className="card animate-fade-up">
-                  <div className="card-header">Encryption Steps</div>
+                <div className="card animate-fade-up" style={{
+                  padding: "clamp(16px, 3vw, 24px)",
+                }}>
+                  <div className="card-header" style={{
+                    fontSize: "clamp(10px, 1.5vw, 11px)",
+                    marginBottom: "clamp(16px, 3vw, 20px)",
+                  }}>Encryption Steps</div>
                   <RSAVisualizer steps={encResult.steps} />
                 </div>
 
-                <div className="card animate-fade-up">
-                  <div className="card-header">Square-and-Multiply Table</div>
-                  <p className="description-text" style={{ marginBottom: 16 }}>
+                <div className="card animate-fade-up" style={{
+                  padding: "clamp(16px, 3vw, 24px)",
+                }}>
+                  <div className="card-header" style={{
+                    fontSize: "clamp(10px, 1.5vw, 11px)",
+                    marginBottom: "clamp(16px, 3vw, 20px)",
+                  }}>Square-and-Multiply Table</div>
+                  <p className="description-text" style={{ 
+                    marginBottom: "clamp(12px, 2vw, 16px)",
+                    fontSize: "clamp(12px, 1.8vw, 14px)",
+                  }}>
                     Computes m^e mod n by scanning bits of e. Bit=1: multiply result by base. Always: square base.
                   </p>
                   <ModPowTable rows={encResult.modPowRows} />
                 </div>
               </>
             ) : (
-              <div className="card" style={{ textAlign: "center", padding: 48 }}>
-                <div style={{ fontFamily: "var(--heading)", fontSize: 11, letterSpacing: "0.2em", color: "var(--text-dim)", marginBottom: 12 }}>
+              <div className="card" style={{ 
+                textAlign: "center", 
+                padding: "clamp(32px, 6vw, 48px)" 
+              }}>
+                <div style={{ 
+                  fontFamily: "var(--heading)", 
+                  fontSize: "clamp(10px, 1.5vw, 11px)", 
+                  letterSpacing: "0.2em", 
+                  color: "var(--text-dim)", 
+                  marginBottom: "clamp(8px, 2vw, 12px)" 
+                }}>
                   WAITING FOR INPUT
                 </div>
-                <p style={{ color: "var(--text-dim)", fontSize: 13 }}>
+                <p style={{ 
+                  color: "var(--text-dim)", 
+                  fontSize: "clamp(12px, 1.8vw, 13px)",
+                  maxWidth: "min(400px, 100%)",
+                  margin: "0 auto",
+                }}>
                   Enter a message and click Encrypt to see the step-by-step modular exponentiation.
                 </p>
               </div>
@@ -456,72 +683,131 @@ export default function RSAPage() {
 
       {/* ═══════════════════ DECRYPT ════════════════════════ */}
       {tab === "decrypt" && (
-        <div className="grid-2" style={{ alignItems: "start" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-            <div className="card">
-              <div className="card-header">Decrypt Configuration</div>
+        <div className="grid-2" style={{ 
+          alignItems: "start",
+          gap: "clamp(16px, 3vw, 24px)",
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(16px, 2vw, 20px)" }}>
+            <div className="card" style={{
+              padding: "clamp(16px, 3vw, 24px)",
+            }}>
+              <div className="card-header" style={{
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+                marginBottom: "clamp(16px, 3vw, 20px)",
+              }}>Decrypt Configuration</div>
 
               {/* Custom key toggle */}
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+              <div style={{ marginBottom: "clamp(16px, 3vw, 20px)" }}>
+                <div style={{ 
+                  display: "flex", 
+                  gap: "clamp(6px, 1.5vw, 8px)", 
+                  marginBottom: "clamp(8px, 1.5vw, 12px)",
+                  flexWrap: "wrap",
+                }}>
                   <button
                     className={`btn btn-sm${!useCustomKeys ? " btn-primary" : " btn-ghost"}`}
                     onClick={() => setUseCustomKeys(false)}
+                    style={{
+                      fontSize: "clamp(9px, 1.3vw, 10px)",
+                      padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                      whiteSpace: "nowrap",
+                    }}
                   >Use Generated Keys</button>
                   <button
                     className={`btn btn-sm${useCustomKeys ? " btn-secondary" : " btn-ghost"}`}
                     onClick={() => setUseCustomKeys(true)}
+                    style={{
+                      fontSize: "clamp(9px, 1.3vw, 10px)",
+                      padding: "clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px)",
+                      whiteSpace: "nowrap",
+                    }}
                   >Enter Custom Keys</button>
                 </div>
 
                 {!useCustomKeys && !keys && (
-                  <div style={{ fontSize: 12, color: "var(--accent2)", fontFamily: "var(--mono)" }}>
+                  <div style={{ 
+                    fontSize: "clamp(11px, 1.5vw, 12px)", 
+                    color: "var(--accent2)", 
+                    fontFamily: "var(--mono)" 
+                  }}>
                     ⚠ No keys generated. Go to Key Generation tab first.
                   </div>
                 )}
 
                 {!useCustomKeys && keys && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 1vw, 8px)" }}>
                     {[
                       { label: "Private Key d", val: keys.d.toString() },
                       { label: "Modulus n", val: keys.n.toString() },
                     ].map(({ label, val }) => (
                       <div key={label}>
-                        <div className="input-label" style={{ marginBottom: 4 }}>{label}</div>
-                        <div className="rsa-value" style={{ maxHeight: 40 }}>{val}</div>
+                        <div className="input-label" style={{ 
+                          marginBottom: "clamp(2px, 0.5vw, 4px)",
+                          fontSize: "clamp(9px, 1.3vw, 10px)",
+                        }}>{label}</div>
+                        <div className="rsa-value" style={{ 
+                          maxHeight: 40,
+                          fontSize: "clamp(11px, 1.8vw, 13px)",
+                          wordBreak: "break-all",
+                        }}>{val}</div>
                       </div>
                     ))}
                   </div>
                 )}
 
                 {useCustomKeys && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "clamp(8px, 1.5vw, 12px)" }}>
                     <div className="input-group">
-                      <label className="input-label">Private Exponent d</label>
+                      <label className="input-label" style={{
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                      }}>Private Exponent d</label>
                       <input className="input-field" value={customD}
-                        onChange={(e) => setCustomD(e.target.value)} placeholder="private exponent d" />
+                        onChange={(e) => setCustomD(e.target.value)} 
+                        placeholder="private exponent d"
+                        style={{
+                          fontSize: "clamp(12px, 1.8vw, 14px)",
+                          padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                        }} />
                     </div>
                     <div className="input-group">
-                      <label className="input-label">Modulus n</label>
+                      <label className="input-label" style={{
+                        fontSize: "clamp(9px, 1.3vw, 10px)",
+                      }}>Modulus n</label>
                       <input className="input-field" value={customN}
-                        onChange={(e) => setCustomN(e.target.value)} placeholder="n = p × q" />
+                        onChange={(e) => setCustomN(e.target.value)} 
+                        placeholder="n = p × q"
+                        style={{
+                          fontSize: "clamp(12px, 1.8vw, 14px)",
+                          padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                        }} />
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="input-group" style={{ marginBottom: 20 }}>
-                <label className="input-label">Ciphertext (integer c)</label>
+              <div className="input-group" style={{ marginBottom: "clamp(16px, 3vw, 20px)" }}>
+                <label className="input-label" style={{
+                  fontSize: "clamp(9px, 1.3vw, 10px)",
+                }}>Ciphertext (integer c)</label>
                 <textarea className="textarea-field" value={decInput}
                   onChange={(e) => setDecInput(e.target.value)}
                   placeholder="Paste ciphertext integer from encryption step"
-                  spellCheck={false} style={{ minHeight: 72 }} />
+                  spellCheck={false} 
+                  style={{ 
+                    minHeight: "clamp(60px, 8vw, 72px)",
+                    fontSize: "clamp(12px, 1.8vw, 14px)",
+                    padding: "clamp(10px, 2vw, 12px) clamp(12px, 2vw, 16px)",
+                  }} />
               </div>
 
               <button
                 className="btn btn-primary w-full"
                 onClick={runDecrypt}
-                style={{ justifyContent: "center" }}
+                style={{ 
+                  justifyContent: "center",
+                  padding: "clamp(10px, 2vw, 12px) clamp(20px, 3vw, 28px)",
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                }}
               >
                 🔓 Decrypt
               </button>
@@ -529,24 +815,52 @@ export default function RSAPage() {
 
             {/* Output */}
             {decResult && (
-              <div className="card animate-fade-up" style={{ borderColor: "var(--accent)" }}>
-                <div className="card-header">Recovered Plaintext</div>
-                <div style={{ fontSize: 12, color: "var(--text-dim)", fontFamily: "var(--mono)", marginBottom: 8 }}>
+              <div className="card animate-fade-up" style={{ 
+                borderColor: "var(--accent)",
+                padding: "clamp(16px, 3vw, 24px)",
+              }}>
+                <div className="card-header" style={{
+                  fontSize: "clamp(10px, 1.5vw, 11px)",
+                  marginBottom: "clamp(12px, 2vw, 16px)",
+                }}>Recovered Plaintext</div>
+                <div style={{ 
+                  fontSize: "clamp(11px, 1.5vw, 12px)", 
+                  color: "var(--text-dim)", 
+                  fontFamily: "var(--mono)", 
+                  marginBottom: "clamp(6px, 1.5vw, 8px)" 
+                }}>
                   m = c^d mod n
                 </div>
-                <div className="rsa-value" style={{ borderColor: "rgba(0,255,231,0.3)", color: "var(--accent)", maxHeight: "none", marginBottom: 12 }}>
+                <div className="rsa-value" style={{ 
+                  borderColor: "rgba(0,255,231,0.3)", 
+                  color: "var(--accent)", 
+                  maxHeight: "none", 
+                  marginBottom: "clamp(8px, 1.5vw, 12px)",
+                  fontSize: "clamp(11px, 1.8vw, 13px)",
+                  wordBreak: "break-all",
+                }}>
                   {decResult.output.toString()}
                 </div>
                 {decResult.text && decResult.text !== decResult.output.toString() && (
                   <div style={{
-                    fontFamily: "var(--mono)", fontSize: 14, color: "var(--accent)",
-                    padding: "10px 14px", background: "rgba(0,255,231,0.04)",
-                    border: "1px solid rgba(0,255,231,0.2)", borderRadius: "var(--radius)",
+                    fontFamily: "var(--mono)", 
+                    fontSize: "clamp(12px, 1.8vw, 14px)", 
+                    color: "var(--accent)",
+                    padding: "clamp(8px, 1.5vw, 10px) clamp(10px, 2vw, 14px)", 
+                    background: "rgba(0,255,231,0.04)",
+                    border: "1px solid rgba(0,255,231,0.2)", 
+                    borderRadius: "var(--radius)",
+                    wordBreak: "break-word",
                   }}>
                     "{decResult.text}"
                   </div>
                 )}
-                <div style={{ marginTop: 12, fontSize: 12, color: "var(--text-dim)", fontFamily: "var(--mono)" }}>
+                <div style={{ 
+                  marginTop: "clamp(8px, 1.5vw, 12px)", 
+                  fontSize: "clamp(11px, 1.5vw, 12px)", 
+                  color: "var(--text-dim)", 
+                  fontFamily: "var(--mono)" 
+                }}>
                   Square-and-multiply: {decResult.modPowRows.length} steps
                 </div>
               </div>
@@ -554,28 +868,60 @@ export default function RSAPage() {
           </div>
 
           {/* Right: steps + mod pow table */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            gap: "clamp(16px, 2vw, 20px)",
+            overflowX: "auto",
+          }}>
             {decResult ? (
               <>
-                <div className="card animate-fade-up">
-                  <div className="card-header">Decryption Steps</div>
+                <div className="card animate-fade-up" style={{
+                  padding: "clamp(16px, 3vw, 24px)",
+                }}>
+                  <div className="card-header" style={{
+                    fontSize: "clamp(10px, 1.5vw, 11px)",
+                    marginBottom: "clamp(16px, 3vw, 20px)",
+                  }}>Decryption Steps</div>
                   <RSAVisualizer steps={decResult.steps} />
                 </div>
 
-                <div className="card animate-fade-up">
-                  <div className="card-header">Square-and-Multiply Table</div>
-                  <p className="description-text" style={{ marginBottom: 16 }}>
-                    Computes c^d mod n. By Euler's theorem: (m^e)^d ≡ m^(ed) ≡ m (mod n).
+                <div className="card animate-fade-up" style={{
+                  padding: "clamp(16px, 3vw, 24px)",
+                }}>
+                  <div className="card-header" style={{
+                    fontSize: "clamp(10px, 1.5vw, 11px)",
+                    marginBottom: "clamp(16px, 3vw, 20px)",
+                  }}>Square-and-Multiply Table</div>
+                  <p className="description-text" style={{ 
+                    marginBottom: "clamp(12px, 2vw, 16px)",
+                    fontSize: "clamp(12px, 1.8vw, 14px)",
+                  }}>
+                    Computes c^d mod n. By Euler&apos;s theorem: (m^e)^d ≡ m^(ed) ≡ m (mod n).
                   </p>
                   <ModPowTable rows={decResult.modPowRows} />
                 </div>
               </>
             ) : (
-              <div className="card" style={{ textAlign: "center", padding: 48 }}>
-                <div style={{ fontFamily: "var(--heading)", fontSize: 11, letterSpacing: "0.2em", color: "var(--text-dim)", marginBottom: 12 }}>
+              <div className="card" style={{ 
+                textAlign: "center", 
+                padding: "clamp(32px, 6vw, 48px)" 
+              }}>
+                <div style={{ 
+                  fontFamily: "var(--heading)", 
+                  fontSize: "clamp(10px, 1.5vw, 11px)", 
+                  letterSpacing: "0.2em", 
+                  color: "var(--text-dim)", 
+                  marginBottom: "clamp(8px, 2vw, 12px)" 
+                }}>
                   WAITING FOR CIPHERTEXT
                 </div>
-                <p style={{ color: "var(--text-dim)", fontSize: 13 }}>
+                <p style={{ 
+                  color: "var(--text-dim)", 
+                  fontSize: "clamp(12px, 1.8vw, 13px)",
+                  maxWidth: "min(400px, 100%)",
+                  margin: "0 auto",
+                }}>
                   Paste a ciphertext integer and click Decrypt to recover the message.
                 </p>
               </div>
@@ -594,15 +940,26 @@ function ModPowTable({ rows }: { rows: ModPowVizRow[] }) {
 
   return (
     <div className="overflow-x">
-      <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "var(--mono)", fontSize: 11 }}>
+      <table style={{ 
+        width: "100%", 
+        borderCollapse: "collapse", 
+        fontFamily: "var(--mono)", 
+        fontSize: "clamp(10px, 1.5vw, 11px)",
+        minWidth: "min(100%, 600px)",
+      }}>
         <thead>
           <tr>
             {["Bit of e", "Exponent (e)", "Base²", "Result"].map(h => (
               <th key={h} style={{
-                textAlign: "left", padding: "8px 10px",
-                color: "var(--accent)", borderBottom: "1px solid var(--border)",
-                fontFamily: "var(--heading)", fontSize: 9, letterSpacing: "0.15em",
-                textTransform: "uppercase", whiteSpace: "nowrap",
+                textAlign: "left", 
+                padding: "clamp(6px, 1vw, 8px) clamp(8px, 1.5vw, 10px)",
+                color: "var(--accent)", 
+                borderBottom: "1px solid var(--border)",
+                fontFamily: "var(--heading)", 
+                fontSize: "clamp(8px, 1.2vw, 9px)", 
+                letterSpacing: "0.15em",
+                textTransform: "uppercase", 
+                whiteSpace: "nowrap",
               }}>{h}</th>
             ))}
           </tr>
@@ -614,19 +971,50 @@ function ModPowTable({ rows }: { rows: ModPowVizRow[] }) {
               background: row.bit === "1" ? "rgba(0,255,231,0.03)" : undefined,
             }}>
               <td style={{
-                padding: "7px 10px",
+                padding: "clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 10px)",
                 color: row.bit === "1" ? "var(--accent)" : "var(--text-dim)",
                 fontWeight: row.bit === "1" ? 700 : undefined,
+                fontSize: "clamp(10px, 1.5vw, 11px)",
               }}>{row.bit}</td>
-              <td style={{ padding: "7px 10px", color: "var(--text)", maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.currentExp}</td>
-              <td style={{ padding: "7px 10px", color: "var(--text-dim)", maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.base}</td>
-              <td style={{ padding: "7px 10px", color: row.bit === "1" ? "var(--accent2)" : "var(--text)", maxWidth: 100, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.result}</td>
+              <td style={{ 
+                padding: "clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 10px)", 
+                color: "var(--text)", 
+                maxWidth: 100, 
+                overflow: "hidden", 
+                textOverflow: "ellipsis", 
+                whiteSpace: "nowrap",
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+              }}>{row.currentExp}</td>
+              <td style={{ 
+                padding: "clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 10px)", 
+                color: "var(--text-dim)", 
+                maxWidth: 100, 
+                overflow: "hidden", 
+                textOverflow: "ellipsis", 
+                whiteSpace: "nowrap",
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+              }}>{row.base}</td>
+              <td style={{ 
+                padding: "clamp(5px, 1vw, 7px) clamp(8px, 1.5vw, 10px)", 
+                color: row.bit === "1" ? "var(--accent2)" : "var(--text)", 
+                maxWidth: 100, 
+                overflow: "hidden", 
+                textOverflow: "ellipsis", 
+                whiteSpace: "nowrap",
+                fontSize: "clamp(10px, 1.5vw, 11px)",
+              }}>{row.result}</td>
             </tr>
           ))}
         </tbody>
       </table>
       {rows.length > MAX_ROWS && (
-        <div style={{ padding: "10px", fontSize: 11, color: "var(--text-dim)", fontFamily: "var(--mono)", textAlign: "center" }}>
+        <div style={{ 
+          padding: "clamp(8px, 1.5vw, 10px)", 
+          fontSize: "clamp(10px, 1.5vw, 11px)", 
+          color: "var(--text-dim)", 
+          fontFamily: "var(--mono)", 
+          textAlign: "center" 
+        }}>
           … {rows.length - MAX_ROWS} more rows (exponent has many bits)
         </div>
       )}
